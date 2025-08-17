@@ -66,10 +66,10 @@ function bottomNav:load()
     end
 
    
-    self.settings.width = self.imageW
-    self.settings.height = self.imageH
-    self.settings.x = wW - self.settings.width
-    self.settings.y = self.settings.height/14
+    self.settings.width = self.imageW - 20 * scale
+    self.settings.height = self.imageH - 20 * scale
+    self.settings.x = wW - self.settings.width - 10 * scale
+    self.settings.y = 15 * scale
         print(self.settings.y)
 
 end
