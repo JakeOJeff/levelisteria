@@ -17,9 +17,9 @@ colors = {
     "#EFEFEF"
 }
 
-fontName = ""
+fontName = "assets/fonts/chivo-black.ttf"
 
-fontH = love.graphics.newFont()
+fontH = love.graphics.newFont(fontName, 64 * scale)
 
 -- Importing components
 bottomnav = require("src.components.bottomnav")
@@ -27,6 +27,7 @@ bottomnav = require("src.components.bottomnav")
 
 local scenery = SceneryInit(
     { path = "src.states.home", key = "home", default = true },
+    { path = "src.states.balance", key = "balance" },
     { path = "src.states.profile", key = "profile" }
 )
 
