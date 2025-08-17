@@ -12,7 +12,7 @@ scale = math.max(wW / baseW, wH / baseH)
 colors = {
     "#143109",
     "#AAAE7F",
-    "#DOD6B3",
+    "#D0D6B3",
     "#F7F7F7",
     "#EFEFEF"
 }

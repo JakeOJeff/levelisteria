@@ -5,6 +5,7 @@ home = {
 
 function home:load()
     print("State : Home")
+    bottomnav:load()
 end
 
 
@@ -14,7 +15,7 @@ end
 
 
 function home:draw()
-    love.graphics.setBackgroundColor(utils.hexToRgb(colors[1]))
+    love.graphics.setBackgroundColor(utils.hexToRgb(colors[4]))
 
     bottomnav:draw()
 end
