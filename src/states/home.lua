@@ -3,18 +3,18 @@ home = {
         grids = 5,
         items = {
             {
-                img = utils.img("assets/images/home.png"),
+                img = utils.img("assets/icons/menu.png"),
                 alt = "Home",
                 link = "home",
-                flex = 1,
+                flex = 3,
             },
             {
-                img = utils.img("assets/images/profile.png"),
+                img = utils.img("assets/icons/profile.png"),
                 alt = "Profile",
                 link = "profile",
-                flex = 1,
+                flex = 5,
             },
-            
+
         }
     }
 }
