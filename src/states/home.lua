@@ -10,7 +10,7 @@ end
 
 
 function home:update(dt)
-
+    bottomnav:update(dt)
 end
 
 
