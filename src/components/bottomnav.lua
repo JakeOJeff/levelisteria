@@ -34,9 +34,10 @@ local bottomNav = {
     },
     settings = {
         img = utils.img("assets/icons/settings.png"),
-        imgSelect = utils.img("assets/icons/settings-selected.png"),
         alt = "Settings",
         link = "settings",
+        width = 0,
+        height = 0,
     }
 }
 
@@ -63,6 +64,14 @@ function bottomNav:load()
             item.y = item.y - 50 * scale
         end
     end
+
+   
+    self.settings.width = self.imageW
+    self.settings.height = self.imageH
+    self.settings.x = wW - self.settings.width
+    self.settings.y = self.settings.height/14
+        print(self.settings.y)
+
 end
 
 function bottomNav:update(dt)
@@ -87,6 +96,7 @@ function bottomNav:draw()
     love.graphics.setColor(utils.hexToRgb(colors[1]))
     love.graphics.circle("fill", self.x + self.width / 2, self.y, self.height / 2)
     love.graphics.rectangle("fill", 0, wH - self.height, wW, self.height)
+    love.graphics.circle("fill", wW, 0, self.height / 1.5)
 
     love.graphics.setColor(1, 1, 1)
 
@@ -105,6 +115,8 @@ function bottomNav:draw()
         love.graphics.draw(drawImg, item.x, item.y, 0, item.width / item.img:getWidth(),
             item.height / item.img:getHeight())
     end
+    love.graphics.setColor(1,1,1)
+    love.graphics.draw(self.settings.img, self.settings.x,self.settings.y, 0, self.settings.width / self.settings.img:getWidth(), self.settings.height / self.settings.img:getHeight())
 end
 
 return bottomNav
