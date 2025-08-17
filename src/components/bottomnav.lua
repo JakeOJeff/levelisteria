@@ -5,9 +5,9 @@ local bottomNav = {
     selected = 1,
     width = 0,
     height = 160 * scale,
-    spacing = 40 * scale,
-    imageW = 80 * scale,
-    imageH = 80 * scale,
+    spacing = 60 * scale,
+    imageW = 85 * scale,
+    imageH = 85 * scale,
     navHover = false,
     items = {
         {
@@ -42,8 +42,8 @@ local bottomNav = {
 }
 
 
-function bottomNav:load()
-
+function bottomNav:load(scene)
+    self.currentScene = scene
     self.grids = #self.items
     self.items = utils.sortFlexList(self.items)
     self.y = wH - self.height / 2 - self.imageH / 2
@@ -56,6 +56,7 @@ function bottomNav:load()
         item.height = self.imageH
         item.x = self.x + (i - 1) * (self.imageW + self.spacing)
         item.y = self.y
+        item.rotation = 0
         if i == 2 then
             item.width = item.width + 30 * scale
             item.x = item.x - 15 * scale
@@ -65,13 +66,12 @@ function bottomNav:load()
         end
     end
 
-   
+
     self.settings.width = self.imageW - 20 * scale
     self.settings.height = self.imageH - 20 * scale
     self.settings.x = wW - self.settings.width - 10 * scale
     self.settings.y = 15 * scale
-        print(self.settings.y)
-
+    print(self.settings.y)
 end
 
 function bottomNav:update(dt)
@@ -81,19 +81,24 @@ function bottomNav:update(dt)
         if mx >= item.x and mx <= item.x + item.width and my >= item.y and my <= item.y + item.height then
             item.hovering = true
             self.navHover = true
+            if i == 2 then
+                if love.system.getOS() ~= "Android" then
+                    item.rotation = item.rotation + math.rad(5)
+                end
+            end
 
             if love.mouse.isDown(1) then
                 self.selected = i
+                self.currentScene.setScene(item.link)
             end
         else
-
             item.hovering = false
         end
     end
 end
 
 function bottomNav:draw()
-    love.graphics.setColor(0,0,0,0.1)
+    love.graphics.setColor(0, 0, 0, 0.1)
     love.graphics.circle("fill", self.x + self.width / 2, self.y - 5 * scale, self.height / 2)
     love.graphics.rectangle("fill", 0, wH - self.height - 5 * scale, wW, self.height)
     love.graphics.circle("fill", wW - 5 * scale, 0 + 5 * scale, self.height / 1.5)
@@ -117,11 +122,21 @@ function bottomNav:draw()
         else
             love.graphics.setColor(1, 1, 1)
         end
-        love.graphics.draw(drawImg, item.x, item.y, 0, item.width / item.img:getWidth(),
-            item.height / item.img:getHeight())
+        -- Draw image with rotation around its center
+        love.graphics.draw(
+            drawImg,
+            item.x + item.width / 2,  -- center x
+            item.y + item.height / 2, -- center y
+            item.rotation,
+            item.width / item.img:getWidth(),
+            item.height / item.img:getHeight(),
+            item.img:getWidth() / 2,
+            item.img:getHeight() / 2
+        )
     end
-    love.graphics.setColor(1,1,1)
-    love.graphics.draw(self.settings.img, self.settings.x,self.settings.y, 0, self.settings.width / self.settings.img:getWidth(), self.settings.height / self.settings.img:getHeight())
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.draw(self.settings.img, self.settings.x, self.settings.y, 0,
+        self.settings.width / self.settings.img:getWidth(), self.settings.height / self.settings.img:getHeight())
 end
 
 return bottomNav

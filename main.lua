@@ -27,3 +27,9 @@ local scenery = SceneryInit(
 )
 
 scenery:hook(love)
+
+function love.resize(w, h)
+    wW = w
+    wH = h
+    scale = math.max(wW / baseW, wH / baseH)
+end
