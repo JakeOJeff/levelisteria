@@ -5,7 +5,7 @@ home = {
 
 function home:load()
     print("State : Home")
-    bottomnav:load()
+    bottomnav:load(self)
 end
 
 

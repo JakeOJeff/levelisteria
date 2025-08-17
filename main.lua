@@ -17,6 +17,10 @@ colors = {
     "#EFEFEF"
 }
 
+fontName = ""
+
+fontH = love.graphics.newFont()
+
 -- Importing components
 bottomnav = require("src.components.bottomnav")
 
