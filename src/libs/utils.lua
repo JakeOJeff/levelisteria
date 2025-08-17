@@ -1,4 +1,6 @@
-local utils = {}
+local utils = {
+
+}
 
 function utils.img(path)
     return love.graphics.newImage(path)
@@ -14,5 +16,16 @@ function utils.sortFlexList(table)
     end
     return table
 end
+
+function utils.hexToRgb(hex)
+    hex = hex:gsub("#","")
+    return {
+        tonumber("0x" .. hex:sub(1,2)) / 255, 
+        tonumber("0x" .. hex:sub(3,4)) / 255, 
+        tonumber("0x" .. hex:sub(5,6)) / 255
+    }
+end
+
+
 
 return utils

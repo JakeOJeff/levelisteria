@@ -1,22 +1,5 @@
 home = {
-    navbar = {
-        grids = 5,
-        items = {
-            {
-                img = utils.img("assets/icons/menu.png"),
-                alt = "Home",
-                link = "home",
-                flex = 3,
-            },
-            {
-                img = utils.img("assets/icons/profile.png"),
-                alt = "Profile",
-                link = "profile",
-                flex = 5,
-            },
-
-        }
-    }
+    navbar = bottomnav
 }
 
 
@@ -31,7 +14,9 @@ end
 
 
 function home:draw()
-    
+    love.graphics.setBackgroundColor(utils.hexToRgb(colors[1]))
+
+    bottomnav:draw()
 end
 
 return home
