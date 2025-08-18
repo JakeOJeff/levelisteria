@@ -35,7 +35,7 @@ function balance:draw()
     love.graphics.setColor(utils.hexToRgb(colors[1]))
 
     -- Main Header box
-    love.graphics.draw(uiGradient, 0, 0, 0, wW, itemY) -- check
+    utils.drawinrect(uiGradient, 0, 0, wW, itemY) -- check
     love.graphics.setColor(utils.hexToRgb(colors[4]))
     love.graphics.rectangle("fill", balanceBox.x - 10 * scale, balanceBox.y - 10 * scale, balanceBox.width + 20 * scale, balanceBox.height + 20 * scale, 10 * scale, 10 * scale)
 
@@ -43,7 +43,7 @@ function balance:draw()
     love.graphics.print(heading, wW/2 - fontS:getWidth(heading)/2, itemY - itemY/2)
 
     love.graphics.setColor(utils.hexToRgb(colors[1]))
-    love.graphics.draw(uiGradient,balanceBox.x, balanceBox.y, 0, balanceBox.width, balanceBox.height, 10 * scale, 10 * scale)
+    utils.drawinrect(uiGradient,balanceBox.x, balanceBox.y, balanceBox.width, balanceBox.height, 10 * scale, 10 * scale)
 
     -- love.graphics.rectangle("fill", wW/2 - fontH:getWidth(heading)/2, 40 * scale + fontH:getHeight(heading), fontH:getWidth(heading), 10 * scale, 5 * scale, 5 * scale)
     -- itemY  = itemY + fontS:getHeight(heading) + 20 * scale

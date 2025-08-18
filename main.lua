@@ -24,10 +24,7 @@ colors = {
     "#EFEFEF"
 }
 
-uiGradient = utils.gradientMesh("vertical",
-        utils.hexToRgb(colors[1]),
-        utils.hexToRgb(colors[5])
-    )
+
 fontName = "assets/fonts/chivo"
 
 
