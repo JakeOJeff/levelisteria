@@ -16,13 +16,22 @@ function sublinks:draw(x, y, width, height, title, link)
     love.graphics.print(title, x + 10 * scale, y + height/2 - font:getHeight()/2)
  
 
-    love.graphics.setColor(1, 1, 0)
+    local iconX = x + width - (0.5 * height) - 16 * scale
+    local iconY = y + (height)/2 - (0.5 * height)/2
+    local mx, my = love.mouse.getPosition()
+    if utils.dist(mx, my, x, y, width, height) then
+        if iconX < width - 2 * scale then
+            iconX = iconX + 2 * scale
+        end
+    end
+
+    love.graphics.setColor(1,1,1)
     love.graphics.draw(self.openIcon,
-    x + width - self.openIcon:getWidth() - 10 * scale,
-    y +  (0.8 * height) - self.openIcon:getHeight()/2,
+    iconX,
+    iconY,
     0,
-    (0.8 * height) / self.openIcon:getWidth(),
-    (0.8 * height) / self.openIcon:getHeight()
+    (0.5 * height) / self.openIcon:getWidth(),
+    (0.5 * height) / self.openIcon:getHeight()
 
 )
 

@@ -52,7 +52,7 @@ function balance:draw()
         "linear",
         wW/2, itemY/2,  -- center x, y
         wW, itemY, -- width, height
-        utils.hexToRgb(colors[1]),
+        utils.hexToRgb(colors[3]),
         utils.hexToRgb(colors[2]),
         0,   -- angle
         1, 1 -- scale

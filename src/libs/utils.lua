@@ -68,4 +68,13 @@ function utils.normalizeCurrency(value)
     end
     return formatted:sub(1, -2)
 end
+
+function utils.dist(mx, my, x, y, width, height)
+
+    if mx > x and mx < x + width and my > y and my < y + height then
+        return true
+    end
+    return false
+
+end
 return utils
