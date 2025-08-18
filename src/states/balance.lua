@@ -90,15 +90,20 @@ function balance:draw()
     love.graphics.print("$ " .. utils.normalizeCurrency(self.amount), balanceBox.x + balanceBox.width / 2 - fontB:getWidth("$ " .. utils.normalizeCurrency(self.amount)) /
     2, balanceBox.y + balanceBox.height / 2 - fontB:getHeight() / 2)
 
-    itemY = itemY + 20 * scale
+    itemY = itemY + 70 * scale
 
     sLink = {
         width = wW - 60 * scale,
-        height = 60 * scale
+        height = fontB:getHeight() * 2
     }
     sLink.x = wW / 2 - sLink.width / 2
     sLink.y = itemY
-    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Link Title", "Link Subtitle", "Link URL")
+    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Bank Transfer", "Link URL")
+    itemY = itemY + sLink.height + 10 * scale
+    sLink.y = itemY
+    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Transaction History", "Link URL")
+
+    
     bottomnav:draw()
 end
 

@@ -33,7 +33,9 @@ fontName = "assets/fonts/chivo"
 fontS = love.graphics.newFont(fontName.."-light.ttf", 32 * scale)
 fontSB = love.graphics.newFont(fontName.."-black.ttf", 32 * scale)
 fontB = love.graphics.newFont(fontName.."-black.ttf", 40 * scale)
+font = love.graphics.newFont(fontName.."-light.ttf", 40 * scale)
 fontH = love.graphics.newFont(fontName.."-light.ttf", 64 * scale)
+fontHB = love.graphics.newFont(fontName.."-black.ttf", 64 * scale)
 
 -- Importing components
 bottomnav = require("src.components.bottomnav")
