@@ -16,6 +16,18 @@ end
 
 function balance:draw()
     love.graphics.setBackgroundColor(utils.hexToRgb(colors[4]))
+    love.gradient.draw(
+        function ()
+            love.graphics.rectangle("fill", 0, 0, wW, wH)
+        end,
+        "linear",
+        wW/2, wH/2,  -- center x, y
+        wW, wH-bottomnav.height, -- width, height
+        utils.hexToRgb(colors[4]),
+        utils.hexToRgb(colors[5]),
+        0,   -- angle
+        1, 1 -- scale
+    )
     love.graphics.setFont(fontS)
 
     local heading = "My Balance"
@@ -78,7 +90,15 @@ function balance:draw()
     love.graphics.print("$ " .. utils.normalizeCurrency(self.amount), balanceBox.x + balanceBox.width / 2 - fontB:getWidth("$ " .. utils.normalizeCurrency(self.amount)) /
     2, balanceBox.y + balanceBox.height / 2 - fontB:getHeight() / 2)
 
-    -- itemY = itemY + 20 * scale
+    itemY = itemY + 20 * scale
+
+    sLink = {
+        width = wW - 60 * scale,
+        height = 60 * scale
+    }
+    sLink.x = wW / 2 - sLink.width / 2
+    sLink.y = itemY
+    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Link Title", "Link Subtitle", "Link URL")
     bottomnav:draw()
 end
 

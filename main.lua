@@ -22,8 +22,8 @@ colors = {
     "#111827",
     "#2b3b5c",
     "#3c5280",
-    "#F7F7F7",
-    "#EFEFEF"
+    "#FFFFFF",
+    "#e0e0e0"
 }
 
 
@@ -37,6 +37,7 @@ fontH = love.graphics.newFont(fontName.."-light.ttf", 64 * scale)
 
 -- Importing components
 bottomnav = require("src.components.bottomnav")
+sublinks = require("src.components.sublinks")
 
 
 local scenery = SceneryInit(
