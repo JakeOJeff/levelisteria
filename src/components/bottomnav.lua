@@ -84,6 +84,9 @@ function bottomNav:update(dt)
             if i == 2 then
                 if love.system.getOS() ~= "Android" then
                     item.rotation = item.rotation + math.rad(5)
+                    if item.rotation > math.rad(360) then
+                        item.rotation = 0
+                    end
                 end
             end
 
@@ -92,6 +95,12 @@ function bottomNav:update(dt)
                 self.currentScene.setScene(item.link)
             end
         else
+            if item.rotation ~= 0 then
+                item.rotation = item.rotation - math.rad(5)
+                if item.rotation < 0 then
+                    item.rotation = 0
+                end
+            end
             item.hovering = false
         end
     end
@@ -99,12 +108,12 @@ end
 
 function bottomNav:draw()
     love.graphics.setColor(0, 0, 0, 0.1)
-    love.graphics.circle("fill", self.x + self.width / 2, self.y - 5 * scale, self.height / 2)
+    love.graphics.circle("fill", self.x + self.width / 2, self.y * scale, self.height / 2)
     love.graphics.rectangle("fill", 0, wH - self.height - 5 * scale, wW, self.height)
     -- love.graphics.circle("fill", wW - 5 * scale, 0 + 5 * scale, self.height / 1.5)
 
     love.graphics.setColor(utils.hexToRgb(colors[1]))
-    love.graphics.circle("fill", self.x + self.width / 2, self.y, self.height / 2)
+    love.graphics.circle("fill", self.x + self.width / 2, self.y + 5 * scale, self.height / 2)
     love.graphics.rectangle("fill", 0, wH - self.height, wW, self.height)
     -- love.graphics.circle("fill", wW, 0, self.height / 1.5)
 

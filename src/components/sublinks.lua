@@ -4,8 +4,11 @@ local sublinks = {
 
 
 function sublinks:draw(x, y, width, height, title, link)
+    love.graphics.setColor(0,0,0,0.2)
 
+        love.graphics.rectangle("fill", x, y + 3 * scale, width, height, 10 * scale, 10 * scale )
     love.graphics.setColor(utils.hexToRgb(colors[2]))
+
     love.graphics.rectangle("fill", x, y, width, height, 10 * scale, 10 * scale )
 
     love.graphics.setColor(1, 1, 1)

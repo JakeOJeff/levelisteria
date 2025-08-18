@@ -66,6 +66,6 @@ function utils.normalizeCurrency(value)
     for i = #formatted, 1, -3 do
         formatted = formatted:sub(1, i) .. "," .. formatted:sub(i + 1)
     end
-    return formatted
+    return formatted:sub(1, -2)
 end
 return utils
