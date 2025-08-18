@@ -1,6 +1,8 @@
+love.graphics.setDefaultFilter("linear", "linear", 1)
 -- Importing Libraries
 local SceneryInit = require("src.libs.scenery")
 utils = require("src.libs.utils")
+require "src.libs.gradient"
 
 baseW = 720
 baseH = 1280

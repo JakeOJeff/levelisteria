@@ -57,4 +57,15 @@ function utils.drawinrect(img, x, y, w, h, r, ox, oy, kx, ky)
     love.graphics.draw(img, x, y, r, w / img:getWidth(), h / img:getHeight(), ox, oy, kx, ky)
 end
 
+function utils.normalizeCurrency(value)
+
+    if type(value) ~= "number" then
+        error("Value must be a number")
+    end
+    local formatted = tostring(value)
+    for i = #formatted, 1, -3 do
+        formatted = formatted:sub(1, i) .. "," .. formatted:sub(i + 1)
+    end
+    return formatted
+end
 return utils
