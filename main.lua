@@ -23,11 +23,18 @@ colors = {
     "#F7F7F7",
     "#EFEFEF"
 }
-fontName = "assets/fonts/chivo-light.ttf"
+
+uiGradient = utils.gradientMesh("vertical",
+        utils.hexToRgb(colors[1]),
+        utils.hexToRgb(colors[5])
+    )
+fontName = "assets/fonts/chivo"
 
 
-fontS = love.graphics.newFont(fontName, 28 * scale)
-fontH = love.graphics.newFont(fontName, 64 * scale)
+fontS = love.graphics.newFont(fontName.."-light.ttf", 32 * scale)
+fontSB = love.graphics.newFont(fontName.."-black.ttf", 32 * scale)
+fontB = love.graphics.newFont(fontName.."-black.ttf", 40 * scale)
+fontH = love.graphics.newFont(fontName.."-light.ttf", 64 * scale)
 
 -- Importing components
 bottomnav = require("src.components.bottomnav")
