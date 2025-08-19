@@ -46,7 +46,11 @@ slideup = require("src.components.slideup")
 local scenery = SceneryInit(
     { path = "src.states.home", key = "home", default = true },
     { path = "src.states.balance", key = "balance" },
-    { path = "src.states.profile", key = "profile" }
+    { path = "src.states.profile", key = "profile" },
+
+    --sublinks
+        { path = "src.states.substates.transactions", key = "transactions" }
+
 )
 
 scenery:hook(love)

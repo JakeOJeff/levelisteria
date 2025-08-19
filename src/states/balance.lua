@@ -103,7 +103,7 @@ function balance:draw()
     sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Bank Transfer", self, "home")
     itemY = itemY + sLink.height + 10 * scale
     sLink.y = itemY
-    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Transaction History", self, "profile")
+    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Transaction History", self, "transactions")
 
     slideup:draw()
     bottomnav:draw()
