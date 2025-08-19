@@ -2,7 +2,6 @@ local sublinks = {
     openIcon = utils.img("assets/icons/open.png")
 }
 
-
 function sublinks:draw(x, y, width, height, title, link)
     love.graphics.setColor(0,0,0,0.2)
 

@@ -1,5 +1,5 @@
 balance = {
-    amount = 1111000000,
+    amount = 9999999000,
     navbar = bottomnav
 }
 
