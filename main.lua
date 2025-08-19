@@ -40,6 +40,7 @@ fontHB = love.graphics.newFont(fontName.."-black.ttf", 64 * scale)
 -- Importing components
 bottomnav = require("src.components.bottomnav")
 sublinks = require("src.components.sublinks")
+slideup = require("src.components.slideup")
 
 
 local scenery = SceneryInit(

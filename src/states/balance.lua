@@ -8,10 +8,12 @@ function balance:load()
     print("State : Balance")
 
     bottomnav:load(self)
+    slideup:load()
 end
 
 function balance:update(dt)
     bottomnav:update(dt)
+    slideup:update(dt)
 end
 
 function balance:draw()
@@ -98,12 +100,12 @@ function balance:draw()
     }
     sLink.x = wW / 2 - sLink.width / 2
     sLink.y = itemY
-    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Bank Transfer", "Link URL")
+    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Bank Transfer", self, "home")
     itemY = itemY + sLink.height + 10 * scale
     sLink.y = itemY
-    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Transaction History", "Link URL")
+    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Transaction History", self, "profile")
 
-    
+    slideup:draw()
     bottomnav:draw()
 end
 

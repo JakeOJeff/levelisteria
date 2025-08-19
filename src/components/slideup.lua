@@ -8,7 +8,7 @@ function slideUp:load()
     self.x = 0
     self.y = wH
     self.w = wW
-    h = wH + 10 * scale
+    self.h = wH + 10 * scale
 end
 function slideUp:startSlide(current, target)
     self.isActive = true
@@ -21,10 +21,9 @@ function slideUp:update(dt)
 
     if self.isActive then
         if self.y > -10 * scale then
-            self.y = self.y - ((wH/6) * dt)
+            self.y = self.y - ((wH * 2) * dt)
         else
-            self.isActive = false
-
+            self.currentScene.setScene(self.target)
         end
     end
 
