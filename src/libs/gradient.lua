@@ -1,6 +1,6 @@
 love.gradient = {}
 
-love.gradient.types = {"linear", "radial", "angle", "rhombus", "square"}
+love.gradient.types = {"linear", "linear-horizontal", "radial", "angle", "rhombus", "square", "dotted-grid-half", "diagonal-grid", "dotted-grid"}
 love.gradient.images = {}
 
 for i, v in ipairs(love.gradient.types) do

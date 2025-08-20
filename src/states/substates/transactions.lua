@@ -38,6 +38,7 @@ function transactions:update(dt)
     if self.fadeInVal < 1 then
         self.fadeInVal = self.fadeInVal + 1 * dt
     end
+    self.fadeInVal = math.min(self.fadeInVal, 1)
 
     if love.mouse.isDown(1) then
         self.isDragging = true
@@ -75,26 +76,46 @@ function transactions:draw()
 
     for i, v in ipairs(self.history) do
         local cardY = perim.y + 12 * scale + (i - 1) * self.cardHeight + (i - 1) * (scale * 10) + self.scrollY
- 
-            love.graphics.setColor(1, 1, 1, self.fadeInVal)
-                    love.graphics.rectangle("fill", perim.x + 12 * scale, cardY, perim.w - 24 * scale, self.cardHeight, 10 * scale,
+
+        love.graphics.setColor(1, 1, 1, self.fadeInVal)
+        love.graphics.rectangle("fill", perim.x + 12 * scale, cardY, perim.w - 24 * scale, self.cardHeight, 10 * scale,
             10 * scale)
-            love.graphics.setColor(transColor)
-                   love.graphics.rectangle("line", perim.x + 12 * scale, cardY, perim.w - 24 * scale, self.cardHeight, 10 * scale,
+        love.graphics.setColor(transColor)
+        love.graphics.rectangle("line", perim.x + 12 * scale, cardY, perim.w - 24 * scale, self.cardHeight, 10 * scale,
             10 * scale)
         love.graphics.setFont(font)
         local ind = self.history[v.id]
         local transactionType = ind.amount > 0 and "Received" or "Sent"
+                local myTransactionColor = transactionType == "Received" and { 134 / 255, 255 / 255, 125 / 255, self.fadeInVal } or
+            { 255 / 255, 134 / 255, 125 / 255, self.fadeInVal }
+            love.graphics.setColor(myTransactionColor)
         love.graphics.print(transactionType .. " $" .. math.abs(ind.amount), perim.x + 18 * scale, cardY + 5 * scale)
 
+        love.graphics.setColor(transColor)
         love.graphics.setFont(fontS)
         love.graphics.print(ind.partner .. " : " .. ind.date, perim.x + 18 * scale, cardY + 5 * scale + font:getHeight())
 
 
-        love.graphics.setColor(transactionType == "Received" and { 134/255, 255/255, 125/255, self.fadeInVal } or { 255/255, 134/255, 125/255, self.fadeInVal })
-        love.graphics.rectangle("fill", perim.x + 18 * scale,
-            cardY + 5 * scale + font:getHeight() + 5 * scale + fontS:getHeight(), perim.w - 36 * scale, fontS:getHeight(),
-            20 * scale, 20 * scale)
+
+
+        love.gradient.draw(
+            function()
+                love.graphics.rectangle("fill", perim.x + 18 * scale,
+                    cardY + 5 * scale + font:getHeight() + 5 * scale + fontS:getHeight(), 
+                    perim.w - 36 * scale,
+                    fontS:getHeight(),
+                    20 * scale, 20 * scale)
+            end,
+            "dotted-grid",
+            perim.x + 18 * scale + (perim.w - 36 * scale)/2, cardY + 5 * scale + font:getHeight() + 5 * scale + fontS:getHeight() + fontS:getHeight()/2,
+            perim.w - 36 * scale, fontS:getHeight(),
+            transColor,
+            myTransactionColor,
+            
+            0,
+            1,1
+        )
+
         love.graphics.setColor(transColor)
     end
 

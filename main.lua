@@ -44,12 +44,12 @@ slideup = require("src.components.slideup")
 
 
 local scenery = SceneryInit(
-    { path = "src.states.home", key = "home", default = true },
+    { path = "src.states.home", key = "home"},
     { path = "src.states.balance", key = "balance" },
     { path = "src.states.profile", key = "profile" },
 
     --sublinks
-        { path = "src.states.substates.transactions", key = "transactions" }
+        { path = "src.states.substates.transactions", key = "transactions", default = true  }
 
 )
 
