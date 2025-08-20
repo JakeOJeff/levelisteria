@@ -86,9 +86,9 @@ function transactions:draw()
         love.graphics.setFont(font)
         local ind = self.history[v.id]
         local transactionType = ind.amount > 0 and "Received" or "Sent"
-                local myTransactionColor = transactionType == "Received" and { 134 / 255, 255 / 255, 125 / 255, self.fadeInVal } or
+        local myTransactionColor = transactionType == "Received" and { 134 / 255, 255 / 255, 125 / 255, self.fadeInVal } or
             { 255 / 255, 134 / 255, 125 / 255, self.fadeInVal }
-            love.graphics.setColor(myTransactionColor)
+        love.graphics.setColor(myTransactionColor)
         love.graphics.print(transactionType .. " $" .. math.abs(ind.amount), perim.x + 18 * scale, cardY + 5 * scale)
 
         love.graphics.setColor(transColor)
@@ -101,21 +101,27 @@ function transactions:draw()
         love.gradient.draw(
             function()
                 love.graphics.rectangle("fill", perim.x + 18 * scale,
-                    cardY + 5 * scale + font:getHeight() + 5 * scale + fontS:getHeight(), 
+                    cardY + 5 * scale + font:getHeight() + 5 * scale + fontS:getHeight(),
                     perim.w - 36 * scale,
                     fontS:getHeight(),
                     20 * scale, 20 * scale)
-            end,
-            "dotted-grid",
-            perim.x + 18 * scale + (perim.w - 36 * scale)/2, cardY + 5 * scale + font:getHeight() + 5 * scale + fontS:getHeight() + fontS:getHeight()/2,
-            perim.w - 36 * scale, fontS:getHeight(),
-            transColor,
-            myTransactionColor,
-            
-            0,
-            1,1
-        )
 
+            end,
+            "linear-horizontal",
+            perim.x + 18 * scale + (perim.w - 36 * scale) / 2,
+            cardY + 5 * scale + font:getHeight() + 5 * scale + fontS:getHeight() + fontS:getHeight() / 2,
+            perim.w - 36 * scale, fontS:getHeight(),
+            myTransactionColor,
+            transColor,
+
+            1 - self.fadeInVal,
+            1, 1
+        )
+                love.graphics.rectangle("line", perim.x + 18 * scale,
+                    cardY + 5 * scale + font:getHeight() + 5 * scale + fontS:getHeight(),
+                    perim.w - 36 * scale,
+                    fontS:getHeight(),
+                    20 * scale, 20 * scale)
         love.graphics.setColor(transColor)
     end
 
