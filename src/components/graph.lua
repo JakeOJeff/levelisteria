@@ -37,12 +37,14 @@ function graph:draw(x, y)
         end
         table.insert(lineTable, gX)
         table.insert(lineTable, gY)
-        if utils.dist(mx, my, gX, gY, 20 * scale, 20 * scale) then
-            love.graphics.circle("line", gX, gY, 2 * scale)
-            print("hover", gX, gY)
+        if utils.distCirc(mx, my, gX, gY, 20 * scale) then
+            love.graphics.circle("line", gX, gY, 20 * scale)
+            love.graphics.print(v.amount, gX, gY + 25 * scale)
         end
     end
     love.graphics.line(lineTable)
+        love.graphics.setColor(1,1,1)
+
 end
 
 function graph:normalizeData()
