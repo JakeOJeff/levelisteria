@@ -9,6 +9,7 @@ function balance:load()
 
     bottomnav:load(self)
     slideup:load()
+    graph:load(transaction_data)
 end
 
 function balance:update(dt)
@@ -104,6 +105,9 @@ function balance:draw()
     itemY = itemY + sLink.height + 10 * scale
     sLink.y = itemY
     sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Transaction History", self, "transactions")
+    itemY = itemY + sLink.height + 10 * scale
+    
+    graph:draw(20 * scale, itemY)
 
     slideup:draw()
     bottomnav:draw()

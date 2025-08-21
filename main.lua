@@ -37,10 +37,14 @@ font = love.graphics.newFont(fontName.."-light.ttf", 40 * scale)
 fontH = love.graphics.newFont(fontName.."-light.ttf", 64 * scale)
 fontHB = love.graphics.newFont(fontName.."-black.ttf", 64 * scale)
 
+
+-- Importing data
+transaction_data = require("src.datasets.transaction_data")
 -- Importing components
 bottomnav = require("src.components.bottomnav")
 sublinks = require("src.components.sublinks")
 slideup = require("src.components.slideup")
+graph = require("src.components.graph")
 
 
 local scenery = SceneryInit(

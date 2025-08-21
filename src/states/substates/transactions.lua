@@ -3,26 +3,7 @@ local transactions = {
     scrollY = 0,
     touchStartY = 0,
     cardHeight = 150 * scale,
-    history = {
-        {
-            id = 3,
-            amount = 100,
-            partner = "Jimmy",
-            date = "2025-08-20"
-        },
-        {
-            id = 2,
-            amount = 1688,
-            partner = "Anrin",
-            date = "2025-08-20"
-        },
-        {
-            id = 1,
-            amount = -50,
-            partner = "Alice",
-            date = "2025-08-21"
-        }
-    }
+    history = transaction_data or {}
 
 }
 
@@ -105,7 +86,6 @@ function transactions:draw()
                     perim.w - 36 * scale,
                     fontS:getHeight(),
                     20 * scale, 20 * scale)
-
             end,
             "linear-horizontal",
             perim.x + 18 * scale + (perim.w - 36 * scale) / 2,
@@ -117,11 +97,11 @@ function transactions:draw()
             1 - self.fadeInVal,
             1, 1
         )
-                love.graphics.rectangle("line", perim.x + 18 * scale,
-                    cardY + 5 * scale + font:getHeight() + 5 * scale + fontS:getHeight(),
-                    perim.w - 36 * scale,
-                    fontS:getHeight(),
-                    20 * scale, 20 * scale)
+        love.graphics.rectangle("line", perim.x + 18 * scale,
+            cardY + 5 * scale + font:getHeight() + 5 * scale + fontS:getHeight(),
+            perim.w - 36 * scale,
+            fontS:getHeight(),
+            20 * scale, 20 * scale)
         love.graphics.setColor(transColor)
     end
 
