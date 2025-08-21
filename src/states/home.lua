@@ -29,9 +29,9 @@ function home:draw()
     )
 
     local topCirc = {
-        x = 0,
-        y = 0,
-        w = wW,
+        x = - (wW/2),
+        y = - (wH/4),
+        w = wW * 2,
         h = wH/2
     }
     love.gradient.draw(
@@ -39,7 +39,7 @@ function home:draw()
             love.graphics.rectangle("fill", topCirc.x, topCirc.y, topCirc.w, topCirc.h, wW * scale, wW * scale)
         end,
         "linear",
-        topCirc.x/2, topCirc.y/2,  -- center x, y
+        topCirc.x + topCirc.w/2, topCirc.y + topCirc.h/2,  -- center x, y
         topCirc.w, topCirc.h, -- width, height
         utils.hexToRgb(colors[1]),
         utils.hexToRgb(colors[3]),

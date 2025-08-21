@@ -114,6 +114,11 @@ function balance:draw()
     
     graph:draw(30 * scale, itemY)
 
+    itemY = itemY + 10 * scale
+
+    local wavelizerWidth = {}
+    for i = 1, 
+
     slideup:draw()
     bottomnav:draw()
 end
