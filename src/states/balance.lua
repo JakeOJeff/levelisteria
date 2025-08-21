@@ -1,5 +1,5 @@
 balance = {
-    amount = 9999999000,
+    amount = 0,
     navbar = bottomnav
 }
 
@@ -10,6 +10,11 @@ function balance:load()
     bottomnav:load(self)
     slideup:load()
     graph:load(transaction_data)
+    self.amount = 0
+    for i, v in ipairs(transaction_data) do
+        self.amount = self.amount + v.amount
+        print(self.amount)
+    end
 end
 
 function balance:update(dt)
@@ -107,7 +112,7 @@ function balance:draw()
     sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Transaction History", self, "transactions")
     itemY = itemY + sLink.height + 10 * scale
     
-    graph:draw(20 * scale, itemY)
+    graph:draw(30 * scale, itemY)
 
     slideup:draw()
     bottomnav:draw()

@@ -22,9 +22,11 @@ end
 function graph:draw(x, y)
     self.x, self.y = x, y
 
-    local frameWidth = wW - 40 * scale
-    local frameHeight = 200 * scale
+    local frameWidth = wW - 60 * scale
+    local frameHeight = 300 * scale
     local baseline = y + frameHeight/2
+
+    love.graphics.setLineWidth(2 * scale)
 
     love.graphics.setColor(utils.hexToRgb(colors[1]))
     love.graphics.rectangle("line", x, y, frameWidth, frameHeight, 10 * scale, 10 * scale)

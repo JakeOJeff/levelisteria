@@ -1,5 +1,11 @@
 local transaction_data = {
     {
+        id = 1,
+        amount = 10000,
+        partner = "JAKE BANK",
+        date = "2025-08-21"
+    },
+    {
         id = 3,
         amount = 100,
         partner = "Jimmy",
@@ -12,7 +18,7 @@ local transaction_data = {
         date = "2025-08-20"
     },
     {
-        id = 1,
+        id = 8,
         amount = -50,
         partner = "Alice",
         date = "2025-08-21"
