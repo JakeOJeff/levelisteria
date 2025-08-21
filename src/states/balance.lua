@@ -114,10 +114,20 @@ function balance:draw()
     
     graph:draw(30 * scale, itemY)
 
-    itemY = itemY + 10 * scale
-
-    local wavelizerWidth = {}
-    for i = 1, 
+    itemY = itemY + graph.height
+    local wavelizer = {
+        x = 30 * scale,
+        y = itemY, 
+        width = (wW - 60 * scale)/10,
+        height = 100 * scale
+    }
+    
+    love.graphics.setColor(utils.hexToRgb(colors[2]))
+    for i = 0, 9 do
+        wavelizer.height = 100 * scale * math.abs(math.sin(love.timer.getTime() + i * 0.1))
+        local rounded = 0 -- (i == 0 or i == 9) and 10 * scale or 
+        love.graphics.rectangle("fill", wavelizer.x + i * wavelizer.width, wavelizer.y, wavelizer.width, wavelizer.height, rounded, rounded)
+    end
 
     slideup:draw()
     bottomnav:draw()

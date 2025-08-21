@@ -2,7 +2,8 @@ local graph = {}
 
 function graph:load(data)
     self.data = data or {}
-
+    self.height = 0
+    self.width = 0
     self.totalAmount = 0
     for i, v in ipairs(self.data) do
         self.totalAmount = self.totalAmount + (v.amount or 0)
@@ -25,6 +26,8 @@ function graph:draw(x, y)
     local frameWidth = wW - 60 * scale
     local frameHeight = 300 * scale
     local baseline = y + frameHeight/2
+    self.height = frameHeight
+    self.width = frameWidth
 
     love.graphics.setLineWidth(2 * scale)
 
