@@ -77,4 +77,11 @@ function utils.dist(mx, my, x, y, width, height)
     return false
 
 end
+
+function utils.distCirc(mx, my, cx, cy, radius)
+    local dx = mx - cx
+    local dy = my - cy
+    return dx * dx + dy * dy <= radius * radius
+end
+
 return utils
