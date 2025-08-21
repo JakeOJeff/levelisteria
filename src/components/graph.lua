@@ -8,20 +8,28 @@ function graph:load(data)
         self.totalAmount = self.totalAmount + (v.amount or 0)
     end
     self.mean = self.totalAmount / #self.data
-    for i = 1, #self.data do
-        if self.data[i].amount >= self.mean then
-            self.aboveMean = self.data[i]
-        else
-            self.belowMean = self.data[i]
+    
+
+    self.maxDeviation = 0
+    for _, v in ipairs(self.data) do
+        local deviation = math.abs(v.amount - self.mean)
+        if deviation > self.maxDeviation then
+            self.maxDeviation = deviation
         end
     end
 end
 
 function graph:draw(x, y)
     self.x, self.y = x, y
+
+    local frameWidth = wW - 40 * scale
+    local frameHeight = 200 * scale
+    local baseline = y + frameHeight/2
+
     love.graphics.setColor(utils.hexToRgb(colors[1]))
-    love.graphics.rectangle("line", x, y, wW - 40 * scale, 200 * scale, 10 * scale, 10 * scale)
-    love.graphics.line(x, y + 100, x + wW - 40 * scale, y + 100)
+    love.graphics.rectangle("line", x, y, frameWidth, frameHeight, 10 * scale, 10 * scale)
+
+    love.graphics.line(x, baseline, x + frameWidth, baseline)
 
 
     local mx, my = love.mouse.getPosition()
@@ -29,12 +37,15 @@ function graph:draw(x, y)
     local lineTable = {}
     for i = 1, #self.data do
         local v = self.data[i]
-        local gX, gY = x + (i - 1) * (wW - 40 * scale) / #self.data, 0
-        if v.amount >= self.mean then
-            gY = y + 100 - (v.amount / self.totalAmount) * 100 * scale
-        else
-            gY = y + 100 + (v.amount / self.totalAmount) * 100 * scale
+        local gX = x + (i - 1) * (frameWidth / math.max((#self.data - 1), 1))
+
+        local graphOffset = 0
+        if self.maxDeviation > 0 then
+            graphOffset = (v.amount - self.mean) / self.maxDeviation *( frameHeight / 2 - 20 * scale)
+
         end
+        local gY = baseline - graphOffset
+
         table.insert(lineTable, gX)
         table.insert(lineTable, gY)
         if utils.distCirc(mx, my, gX, gY, 20 * scale) then
@@ -42,9 +53,10 @@ function graph:draw(x, y)
             love.graphics.print(v.amount, gX, gY + 25 * scale)
         end
     end
-    love.graphics.line(lineTable)
-        love.graphics.setColor(1,1,1)
-
+        if #lineTable >= 4 then
+        love.graphics.line(lineTable)
+    end
+    love.graphics.setColor(1, 1, 1)
 end
 
 function graph:normalizeData()
