@@ -114,7 +114,7 @@ function balance:draw()
     
     graph:draw(30 * scale, itemY)
 
-    itemY = itemY + graph.height
+    itemY = itemY + graph.height + 8 * scale
     local wavelizer = {
         x = 30 * scale,
         y = itemY, 
@@ -123,11 +123,19 @@ function balance:draw()
     }
     
     love.graphics.setColor(utils.hexToRgb(colors[2]))
+    love.graphics.setFont(font)
+    local offerText = "LIMITED TIME OFFER 10%"
+    love.graphics.print(offerText, wavelizer.x + (wW - 60 * scale)/2 - font:getWidth(offerText)/2, wavelizer.y + wavelizer.height/2 - font:getHeight()/2)
     for i = 0, 9 do
-        wavelizer.height = 100 * scale * math.abs(math.sin(love.timer.getTime() + i * 0.1))
+        wavelizer.height = 100 * scale * math.abs(math.cos(love.timer.getTime() + i * 0.1))
         local rounded = 0 -- (i == 0 or i == 9) and 10 * scale or 
+        love.graphics.setColor(utils.hexToRgb(colors[2])[1],utils.hexToRgb(colors[2])[2],utils.hexToRgb(colors[2])[3], math.abs(math.tan(love.timer.getTime() + i * 0.1)))
         love.graphics.rectangle("fill", wavelizer.x + i * wavelizer.width, wavelizer.y, wavelizer.width, wavelizer.height, rounded, rounded)
     end
+    love.graphics.setLineWidth(8 * scale)
+    love.graphics.setColor(utils.hexToRgb(colors[5]))
+    love.graphics.rectangle("line",wavelizer.x, itemY, wW - 60 * scale, 100 * scale, 10 * scale, 10 * scale)
+    love.graphics.setLineWidth(1 * scale)
 
     slideup:draw()
     bottomnav:draw()
