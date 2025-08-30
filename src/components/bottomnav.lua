@@ -108,10 +108,6 @@ function bottomNav:update(dt)
 end
 
 function bottomNav:draw()
-    love.graphics.setColor(0, 0, 0, 0.1)
-    love.graphics.circle("fill", self.x + self.width / 2, self.y * scale, self.height / 2)
-    love.graphics.rectangle("fill", 0, wH - self.height - 5 * scale, wW, self.height)
-    -- love.graphics.circle("fill", wW - 5 * scale, 0 + 5 * scale, self.height / 1.5)
 
     love.graphics.setColor(utils.hexToRgb(colors[1]))
     love.graphics.circle("fill", self.x + self.width / 2, self.y + 5 * scale, self.height / 2)
