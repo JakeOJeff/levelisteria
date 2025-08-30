@@ -106,7 +106,7 @@ function balance:draw()
     }
     sLink.x = wW / 2 - sLink.width / 2
     sLink.y = itemY
-    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Bank Transfer", self, "home")
+    sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Bank Transfer", self, "transfer")
     itemY = itemY + sLink.height + 10 * scale
     sLink.y = itemY
     sublinks:draw(sLink.x, sLink.y, sLink.width, sLink.height, "Transaction History", self, "transactions")

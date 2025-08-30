@@ -1,52 +1,29 @@
 local transaction_data = {
-    {
-        id = 1,
-        amount = 10000,
-        partner = "JAKE BANK",
-        date = "2025-08-21"
-    },
-    {
-        id = 3,
-        amount = 100,
-        partner = "Jimmy",
-        date = "2025-08-20"
-    },
-    {
-        id = 2,
-        amount = 1688,
-        partner = "Anrin",
-        date = "2025-08-20"
-    },
-    {
-        id = 8,
-        amount = -50,
-        partner = "Alice",
-        date = "2025-08-21"
-    },
-    {
-        id = 4,
-        amount = 123,
-        partner = "Alice",
-        date = "2025-08-21"
-    },
-    {
-        id = 7,
-        amount = 6000,
-        partner = "Alice",
-        date = "2025-08-21"
-    },
-    {
-        id = 5,
-        amount = 200,
-        partner = "Alice",
-        date = "2025-08-21"
-    },
-    {
-        id = 6,
-        amount = -590,
-        partner = "Alice",
-        date = "2025-08-21"
-    }
+    -- THE FORMAT
+    -- {
+    --     id = 1,
+    --     amount = 10000,
+    --     partner = "JAKE BANK",
+    --     date = "2025-08-21"
+    -- }
 }
+local function random_date()
+    -- Random date in August 2025
+    local day = math.random(1, 31)
+    return string.format("2025-08-%02d", day)
+end
+
+local partners = { "Alice", "Bob", "Charlie", "Jimmy", "Anrin", "JAKE BANK", "Eve", "MallMart" }
+
+
+for i = 1, 30 do
+    local t = {
+        id = i,
+        amount = math.random(-1000, 1000), -- can be negative (debit) or positive (credit)
+        partner = partners[math.random(#partners)],
+        date = random_date()
+    }
+    table.insert(transaction_data, t)
+end
 
 return transaction_data
