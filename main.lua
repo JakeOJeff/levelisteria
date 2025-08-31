@@ -53,7 +53,8 @@ local scenery = SceneryInit(
     { path = "src.states.profile", key = "profile" },
 
     --sublinks
-        { path = "src.states.substates.transactions", key = "transactions"}
+        { path = "src.states.substates.transactions", key = "transactions"},
+        { path = "src.states.substates.transfer", key = "transfer"}
 
 )
 

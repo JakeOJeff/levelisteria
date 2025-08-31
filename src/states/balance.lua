@@ -122,6 +122,8 @@ function balance:draw()
         height = 100 * scale
     }
     
+    -- WAVELIZER 
+
     love.graphics.setColor(utils.hexToRgb(colors[2]))
     love.graphics.setFont(font)
     local offerText = "LIMITED TIME OFFER 10%"
@@ -136,6 +138,8 @@ function balance:draw()
     love.graphics.setColor(utils.hexToRgb(colors[5]))
     love.graphics.rectangle("line",wavelizer.x, itemY, wW - 60 * scale, 100 * scale, 10 * scale, 10 * scale)
     love.graphics.setLineWidth(1 * scale)
+
+
 
     slideup:draw()
     bottomnav:draw()
