@@ -19,9 +19,9 @@ function transfer:load()
         selected = false
     }
     self.inputName = {
-        value = "0",
+        value = "",
         x = self.inputAmount.x,
-        y = self.inputAmount.y + self.inputAmount.h + 50 * scale,
+        y = self.inputAmount.y + self.inputAmount.h + 100 * scale,
         w = buttontab.w * 3 + 20 * scale * 2,
         h = buttontab.h * 2,
         selected = false
@@ -34,12 +34,18 @@ function transfer:load()
     self.submitBtn = {
         func = function()
             table.insert(transaction_data, {
-                        id = #transaction_data,
-        amount = self.inputAmount.value,
-        partner = self.inputName.value,
-        date =  os.date("%Y-%m-%d")
+                id = #transaction_data,
+                amount = self.inputAmount.value,
+                partner = self.inputName.value,
+                date = os.date("%Y-%m-%d")
             })
-        end
+        end,
+        hovering = false,
+        x = self.inputAmount.x + 50 * scale,
+        y = self.inputName.y + self.inputName.h + 40 * scale,
+        w = self.inputAmount.w - 100 * scale,
+        h = self.inputAmount.h
+
     }
 end
 
@@ -71,6 +77,13 @@ function transfer:update(dt)
             self.inputName.selected = true
             self.inputAmount.selected = false
         end
+    end
+    if mx > self.submitBtn.x and mx < self.submitBtn.x + self.submitBtn.w and my > self.submitBtn.y and my <
+        self.submitBtn.y + self.submitBtn.h then
+        self.submitBtn.hovering = true
+        self.submitBtn.func()
+    else
+        self.submitBtn.hovering = false
     end
 end
 
@@ -116,8 +129,9 @@ function transfer:draw()
     love.graphics.print(sendAmt, self.inputName.x + (self.inputName.w / 2 - fontHB:getWidth(sendAmt) / 2),
         self.inputName.y + (self.inputAmount.h / 2 - fontHB:getHeight() / 2))
 
+    btn = self.submitBtn
 
-        -- SEND BUTTON
+    -- SEND BUTTON
     if btn.hovering then
         hoverStyle = "fill"
         hoverInvertColor = {1, 1, 1}
@@ -140,7 +154,9 @@ function transfer:draw()
     love.graphics.setColor(utils.hexToRgb(colors[3]))
     bottomnav:draw()
 end
-
+function transfer:currentlySelected()
+    return self.inputAmount.selected and self.inputAmount or self.inputName
+end
 function transfer:keypressed(key)
     if key == "backspace" then
         self:deleteChar() -- immediate delete
@@ -168,6 +184,14 @@ function transfer:deleteChar()
 
 end
 
+function transfer:mousepressed(x, y, button)
+    if button == 1 then
+        if self.submitBtn.hovering then
+            self.submitBtn.func()
+            transfer.setScene("balance")
+        end
+    end
+end
 function checkNum(val)
     if tonumber(val) ~= nil then
         return true
