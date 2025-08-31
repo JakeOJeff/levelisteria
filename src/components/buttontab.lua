@@ -32,18 +32,23 @@ end
 function buttontab:draw()
     for i, btn in ipairs(self.buttons) do
         if btn.hovering then
-            love.graphics.setColor(utils.hexToRgb(colors[4]))
+            hoverStyle = "fill"
+            hoverInvertColor = {1,1,1}
         else
-            love.graphics.setColor(utils.hexToRgb(colors[3]))
+            hoverStyle = "line"
+            hoverInvertColor = utils.hexToRgb(colors[3])
         end
-        love.graphics.rectangle("line", btn.x, btn.y, btn.w, btn.h, 10, 10)
+        love.graphics.rectangle(hoverStyle, btn.x, btn.y, btn.w, btn.h, 10, 10)
 
         -- draw amount text centered inside button
-        local text = tostring(math.floor(btn.amount))
+        local text = "$"..tostring(math.floor(btn.amount))
         local font = love.graphics.getFont()
         local tw = font:getWidth(text)
         local th = font:getHeight()
+        love.graphics.setColor(hoverInvertColor)
         love.graphics.print(text, btn.x + (btn.w - tw) / 2, btn.y + (btn.h - th) / 2)
+        love.graphics.setColor(utils.hexToRgb(colors[3]))
+
     end
 end
 
