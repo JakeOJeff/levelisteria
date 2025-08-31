@@ -22,6 +22,7 @@ function buttontab:load()
     end
 end
 
+
 function buttontab:update(dt)
     local mx, my = love.mouse.getPosition()
     for _, btn in ipairs(self.buttons) do
@@ -38,7 +39,7 @@ function buttontab:draw()
             hoverStyle = "line"
             hoverInvertColor = utils.hexToRgb(colors[3])
         end
-        love.graphics.rectangle(hoverStyle, btn.x, btn.y, btn.w, btn.h, 10, 10)
+        love.graphics.rectangle(hoverStyle, btn.x, btn.y, btn.w, btn.h, 15 * scale, 15 * scale)
 
         -- draw amount text centered inside button
         local text = "$"..tostring(math.floor(btn.amount))
@@ -48,7 +49,6 @@ function buttontab:draw()
         love.graphics.setColor(hoverInvertColor)
         love.graphics.print(text, btn.x + (btn.w - tw) / 2, btn.y + (btn.h - th) / 2)
         love.graphics.setColor(utils.hexToRgb(colors[3]))
-
     end
 end
 
