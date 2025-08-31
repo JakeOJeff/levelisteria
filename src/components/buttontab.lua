@@ -7,11 +7,12 @@ function buttontab:load()
     self.w = (wW - (self.x * 2) - (2 * (20 * scale))) / 3 -- subtract total spacing
     self.h = 50 * scale
     self.spacing = 20 * scale
-    self.hoveringElement = 1
+    self.hoveringElement = 0
 end
 
 function buttontab:update(dt)
     local mx, my = love.mouse.getPosition()
+    self.hoveringElement = 0
     for i = 0, 2 do
         local bx = self.x + (self.w + self.spacing) * i
         if mx > bx and mx < bx + self.w and my > self.y and my < self.y + self.h then
