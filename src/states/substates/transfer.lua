@@ -9,10 +9,12 @@ function transfer:load()
     self.fadeInVal = 0
     print("IN TRANSFER STATE")
     bottomnav:load(self)
+    buttontab:load()
 end
 
 function transfer:update(dt)
     bottomnav:update(dt)
+    buttontab:update(dt)
     if self.fadeInVal < 1 then
         self.fadeInVal = self.fadeInVal + 1 * dt
     end
@@ -26,6 +28,7 @@ function transfer:draw()
     love.graphics.setColor(transColor)    love.graphics.setFont(fontB)
     local hText = "Bank Transfer"
     love.graphics.print(hText, wW/2 - fontB:getWidth(hText)/2, 50 * scale)
+    buttontab:draw()
     bottomnav:draw()
 end
 

@@ -45,6 +45,7 @@ bottomnav = require("src.components.bottomnav")
 sublinks = require("src.components.sublinks")
 slideup = require("src.components.slideup")
 graph = require("src.components.graph")
+buttontab = require("src.components.buttontab")
 
 
 local scenery = SceneryInit(
