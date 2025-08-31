@@ -1,37 +1,49 @@
 local buttontab = {}
 
 function buttontab:load()
-    self.amounts = {returnBalance() / 3, returnBalance() / 2, returnBalance()}
+    local amounts = { returnBalance() / 3, returnBalance() / 2, returnBalance() }
+    self.buttons = {}
+    self.spacing = 20 * scale
     self.x = 25 * scale
     self.y = 300 * scale
-    self.w = (wW - (self.x * 2) - (2 * (20 * scale))) / 3 -- subtract total spacing
+    self.w = (wW - (self.x * 2) - (2 * self.spacing)) / 3
     self.h = 50 * scale
-    self.spacing = 20 * scale
-    self.hoveringElement = 0
+
+    for i, amt in ipairs(amounts) do
+        local bx = self.x + (self.w + self.spacing) * (i - 1)
+        self.buttons[i] = {
+            x = bx,
+            y = self.y,
+            w = self.w,
+            h = self.h,
+            amount = amt,
+            hovering = false
+        }
+    end
 end
 
 function buttontab:update(dt)
     local mx, my = love.mouse.getPosition()
-    self.hoveringElement = 0
-    for i = 0, 2 do
-        local bx = self.x + (self.w + self.spacing) * i
-        if mx > bx and mx < bx + self.w and my > self.y and my < self.y + self.h then
-            self.hoveringElement = i + 1
-        end
+    for _, btn in ipairs(self.buttons) do
+        btn.hovering = (mx > btn.x and mx < btn.x + btn.w and my > btn.y and my < btn.y + btn.h)
     end
 end
 
 function buttontab:draw()
-    love.graphics.setColor(utils.hexToRgb(colors[3]))
-    for i = 0, 2 do
-        if self.hoveringElement == ( i + 1 ) then
-            print("HOVER "..i)
+    for i, btn in ipairs(self.buttons) do
+        if btn.hovering then
             love.graphics.setColor(utils.hexToRgb(colors[4]))
-        end
-        local bx = self.x + (self.w + self.spacing) * i
-        love.graphics.rectangle("line", bx, self.y, self.w, self.h, 10, 10)
+        else
             love.graphics.setColor(utils.hexToRgb(colors[3]))
+        end
+        love.graphics.rectangle("line", btn.x, btn.y, btn.w, btn.h, 10, 10)
 
+        -- draw amount text centered inside button
+        local text = tostring(math.floor(btn.amount))
+        local font = love.graphics.getFont()
+        local tw = font:getWidth(text)
+        local th = font:getHeight()
+        love.graphics.print(text, btn.x + (btn.w - tw) / 2, btn.y + (btn.h - th) / 2)
     end
 end
 
