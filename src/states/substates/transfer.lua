@@ -79,6 +79,14 @@ function transfer:draw()
 
     love.graphics.print(sendAmt, self.inputAmount.x + (self.inputAmount.w/2 - fontHB:getWidth(sendAmt)/2),
         self.inputAmount.y + (self.inputAmount.h/2 - fontHB:getHeight()/2))
+
+
+    love.graphics.setColor(transColor)
+
+    love.graphics.setFont(fontB)
+    love.graphics.print("Enter Recipient", self.inputAmount.x, self.inputAmount.y + self.inputAmount.h + 30 * scale)
+
+    
     bottomnav:draw()
 end
 
