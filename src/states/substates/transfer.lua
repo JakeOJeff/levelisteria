@@ -1,9 +1,7 @@
 local transfer = {
-    navbar = bottomnav,
-
+    navbar = bottomnav
 
 }
-
 
 function transfer:load()
     self.fadeInVal = 0
@@ -12,14 +10,19 @@ function transfer:load()
     print("IN TRANSFER STATE")
     bottomnav:load(self)
     buttontab:load()
-        self.inputAmount = {
+    self.inputAmount = {
         value = "0",
         x = buttontab.x,
         y = buttontab.y + buttontab.h + 20 * scale,
-        w = buttontab.w * 3 + 20 *scale * 2, 
+        w = buttontab.w * 3 + 20 * scale * 2,
         h = buttontab.h * 2,
         selected = false
     }
+
+    self.deleteHeld = false
+    self.deleteTimer = 0
+    self.deleteDelay = 1     -- seconds before repeating starts
+    self.deleteInterval = 0.1 -- seconds between repeats
 end
 
 function transfer:update(dt)
@@ -30,13 +33,18 @@ function transfer:update(dt)
     end
     self.fadeInVal = math.min(self.fadeInVal, 1)
 
-    if love.keyboard.isDown("backspace") then
-            self.inputAmount.value = string.len(tostring(self.inputAmount.value)) > 1 and  string.sub(self.inputAmount.value, 0, -1) or 0
+        if self.deleteHeld then
+        self.deleteTimer = self.deleteTimer + dt
 
+        if self.deleteTimer > self.deleteDelay then
+            -- start repeating deletes
+            self.deleteTimer = self.deleteTimer - self.deleteInterval
+            self:deleteChar()
+        end
     end
-
     local mx, my = love.mouse.getPosition()
-    if mx > self.inputAmount.x and mx < self.inputAmount.x + self.inputAmount.w and my > self.inputAmount.y and my < self.inputAmount.y + self.inputAmount.h then
+    if mx > self.inputAmount.x and mx < self.inputAmount.x + self.inputAmount.w and my > self.inputAmount.y and my <
+        self.inputAmount.y + self.inputAmount.h then
         if love.mouse.isDown(1) then
 
             self.inputAmount.selected = true
@@ -45,25 +53,56 @@ function transfer:update(dt)
 end
 
 function transfer:textinput(t)
-    if self.inputAmount.selected then
-            self.inputAmount.value = self.inputAmount.value .. t
+    
+    if self.inputAmount.selected and checkNum(t) then
+        self.inputAmount.value = self.inputAmount.value .. t
 
     end
 end
 
 function transfer:draw()
-    local transColor = { utils.hexToRgb(colors[3])[1], utils.hexToRgb(colors[3])[2], utils.hexToRgb(colors[3])[3], self
-        .fadeInVal }
+    local transColor = {utils.hexToRgb(colors[3])[1], utils.hexToRgb(colors[3])[2], utils.hexToRgb(colors[3])[3],
+                        self.fadeInVal}
 
-    love.graphics.setColor(transColor)    love.graphics.setFont(fontB)
+    love.graphics.setColor(transColor)
+    love.graphics.setFont(fontB)
     local hText = "BANK TRANSFER"
-    love.graphics.print(hText, wW/2 - fontB:getWidth(hText)/2, 50 * scale)
+    love.graphics.print(hText, wW / 2 - fontB:getWidth(hText) / 2, 50 * scale)
     buttontab:draw()
-    love.graphics.rectangle("line", self.inputAmount.x, self.inputAmount.y, self.inputAmount.w, self.inputAmount.h, 15 * scale)
-    love.graphics.print(utils.normalizeCurrency(tonumber(self.inputAmount.value)), self.inputAmount.x, self.inputAmount.y)
+    love.graphics.rectangle("line", self.inputAmount.x, self.inputAmount.y, self.inputAmount.w, self.inputAmount.h,
+        15 * scale)
+    love.graphics.print(utils.normalizeCurrency(tonumber(self.inputAmount.value)), self.inputAmount.x,
+        self.inputAmount.y)
     bottomnav:draw()
 end
 
+function transfer:keypressed(key)
+        if key == "backspace" then
+        self:deleteChar() -- immediate delete
+        self.deleteHeld = true
+        self.deleteTimer = 0
+    end
+end
+function transfer:keyreleased(key)
+    if key == "backspace" then
+        self.deleteHeld = false
+    end
+end
+-- helper: actually delete last char
+function transfer:deleteChar()
+    local str = tostring(self.inputAmount.value)
+    if #str > 1 then
+        self.inputAmount.value = string.sub(str, 1, -2)
+    elseif #str >= 0 then
+        self.inputAmount.value = "0"
+    end
+    
+end
 
-
+function checkNum(val)
+    if tonumber(val) ~= nil then
+        return true
+    end
+    return false
+end
 return transfer
