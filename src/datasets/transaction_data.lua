@@ -9,7 +9,7 @@ local transaction_data = {
 }
 local function random_date()
     -- Random date in August 2025
-    local day = math.random(1, 31)
+    local day = love.math.random(1, 31)
     return string.format("2025-08-%02d", day)
 end
 

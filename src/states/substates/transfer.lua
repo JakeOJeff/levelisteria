@@ -97,7 +97,11 @@ end
 function transfer:deleteChar()
     local str = tostring(self.inputAmount.value)
     if #str > 1 then
-        self.inputAmount.value = string.sub(str, 1, -2)
+        if #str == 2 and string.sub(str, 1,1) == "-" then
+            self.inputAmount.value = "0"
+        else
+            self.inputAmount.value = string.sub(str, 1, -2)
+        end
     elseif #str >= 0 then
         self.inputAmount.value = "0"
     end
