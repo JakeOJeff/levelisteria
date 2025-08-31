@@ -26,4 +26,12 @@ for i = 1, 30 do
     table.insert(transaction_data, t)
 end
 
+function returnBalance()
+    local val = 0
+    for i = 1, #transaction_data do
+        val = val + transaction_data[i].amount
+    end
+    return val
+end
+
 return transaction_data
