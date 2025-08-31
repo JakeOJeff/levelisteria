@@ -1,6 +1,6 @@
 local buttontab = {}
 
-function buttontab:load()
+function buttontab:load(trans)
     local amounts = { returnBalance() / 3, returnBalance() / 2, returnBalance() }
     self.buttons = {}
     self.spacing = 20 * scale
@@ -17,7 +17,10 @@ function buttontab:load()
             w = self.w,
             h = self.h,
             amount = amt,
-            hovering = false
+            hovering = false,
+            func = function()
+                trans.inputAmount.value = math.floor(amt)
+            end
         }
     end
 end
@@ -35,6 +38,9 @@ function buttontab:draw()
         if btn.hovering then
             hoverStyle = "fill"
             hoverInvertColor = {1,1,1}
+            if love.mouse.isDown(1) then
+                btn.func()
+            end
         else
             hoverStyle = "line"
             hoverInvertColor = utils.hexToRgb(colors[3])

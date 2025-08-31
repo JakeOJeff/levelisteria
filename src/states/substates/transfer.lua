@@ -9,7 +9,7 @@ function transfer:load()
     self.inputAmount = ""
     print("IN TRANSFER STATE")
     bottomnav:load(self)
-    buttontab:load()
+    buttontab:load(self)
     self.inputAmount = {
         value = "0",
         x = buttontab.x,
@@ -68,11 +68,16 @@ function transfer:draw()
     love.graphics.setFont(fontB)
     local hText = "BANK TRANSFER"
     love.graphics.print(hText, wW / 2 - fontB:getWidth(hText) / 2, 50 * scale)
+    love.graphics.setFont(fontB)
     buttontab:draw()
+    
     love.graphics.rectangle("line", self.inputAmount.x, self.inputAmount.y, self.inputAmount.w, self.inputAmount.h,
         15 * scale)
-    love.graphics.print(utils.normalizeCurrency(tonumber(self.inputAmount.value)), self.inputAmount.x,
-        self.inputAmount.y)
+    local sendAmt = utils.normalizeCurrency(tonumber(self.inputAmount.value))
+        love.graphics.setFont(fontHB)
+
+    love.graphics.print(sendAmt, self.inputAmount.x + (self.inputAmount.w/2 - fontHB:getWidth(sendAmt)/2),
+        self.inputAmount.y + (self.inputAmount.h/2 - fontHB:getHeight()/2))
     bottomnav:draw()
 end
 
