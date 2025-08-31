@@ -63,7 +63,7 @@ function transfer:update(dt)
         if self.deleteTimer > self.deleteDelay then
             -- start repeating deletes
             self.deleteTimer = self.deleteTimer - self.deleteInterval
-            self:deleteChar()
+            self:deleteChar(self:currentlySelected())
         end
     end
     local mx, my = love.mouse.getPosition()
@@ -159,7 +159,7 @@ function transfer:currentlySelected()
 end
 function transfer:keypressed(key)
     if key == "backspace" then
-        self:deleteChar() -- immediate delete
+        self:deleteChar(self:currentlySelected()) -- immediate delete
         self.deleteHeld = true
         self.deleteTimer = 0
     end
@@ -170,16 +170,25 @@ function transfer:keyreleased(key)
     end
 end
 -- helper: actually delete last char
-function transfer:deleteChar()
-    local str = tostring(self.inputAmount.value)
-    if #str > 1 then
-        if #str == 2 and string.sub(str, 1, 1) == "-" then
+function transfer:deleteChar(sel)
+    local str = tostring(sel.value)
+
+    -- For integers
+    if sel == self.inputAmount then
+        if #str > 1 then
+            if #str == 2 and string.sub(str, 1, 1) == "-" then
+                self.inputAmount.value = "0"
+            else
+                self.inputAmount.value = string.sub(str, 1, -2)
+            end
+        elseif #str >= 0 then
             self.inputAmount.value = "0"
-        else
-            self.inputAmount.value = string.sub(str, 1, -2)
         end
-    elseif #str >= 0 then
-        self.inputAmount.value = "0"
+    else
+        if #str > 0 then
+                self.inputName.value = string.sub(str, 1, -2)
+        end
+
     end
 
 end
