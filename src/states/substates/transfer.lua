@@ -8,6 +8,7 @@ function transfer:load()
 
     self.inputAmount = ""
     print("IN TRANSFER STATE")
+    print(balance_Data.amount)
     bottomnav:load(self)
     buttontab:load(self)
     self.inputAmount = {
@@ -34,11 +35,13 @@ function transfer:load()
     self.submitBtn = {
         func = function()
             table.insert(transaction_data, {
-                id = #transaction_data,
+                id = #transaction_data + 1,
                 amount = self.inputAmount.value,
                 partner = self.inputName.value,
                 date = os.date("%Y-%m-%d")
             })
+            balance_Data.amount = balance_Data.amount - tonumber(self.inputAmount.value)
+
         end,
         hovering = false,
         x = self.inputAmount.x + 50 * scale,
@@ -81,7 +84,6 @@ function transfer:update(dt)
     if mx > self.submitBtn.x and mx < self.submitBtn.x + self.submitBtn.w and my > self.submitBtn.y and my <
         self.submitBtn.y + self.submitBtn.h then
         self.submitBtn.hovering = true
-        self.submitBtn.func()
     else
         self.submitBtn.hovering = false
     end
@@ -90,7 +92,7 @@ end
 function transfer:textinput(t)
 
     if self.inputAmount.selected and checkNum(t) then
-        self.inputAmount.value = self.inputAmount.value .. t
+        self.inputAmount.value = self.inputAmount.value .. t 
 
     end
     if self.inputName.selected then
@@ -155,13 +157,13 @@ function transfer:draw()
     bottomnav:draw()
 end
 function transfer:currentlySelected()
-    return self.inputAmount.selected and self.inputAmount or self.inputName
+    return self.inputAmount.selected and self.inputAmount or self.inputName 
 end
 function transfer:keypressed(key)
     if key == "backspace" then
         self:deleteChar(self:currentlySelected()) -- immediate delete
         self.deleteHeld = true
-        self.deleteTimer = 0
+        self.deleteTimer = 0 
     end
 end
 function transfer:keyreleased(key)
@@ -171,7 +173,7 @@ function transfer:keyreleased(key)
 end
 -- helper: actually delete last char
 function transfer:deleteChar(sel)
-    local str = tostring(sel.value)
+    local str = tostring(sel.value) 
 
     -- For integers
     if sel == self.inputAmount then
@@ -188,7 +190,6 @@ function transfer:deleteChar(sel)
         if #str > 0 then
                 self.inputName.value = string.sub(str, 1, -2)
         end
-
     end
 
 end
@@ -197,6 +198,8 @@ function transfer:mousepressed(x, y, button)
     if button == 1 then
         if self.submitBtn.hovering then
             self.submitBtn.func()
+            
+            trans_Data:load()
             transfer.setScene("balance")
         end
     end

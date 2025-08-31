@@ -11,6 +11,7 @@ local transactions = {
 function transactions:load()
     self.fadeInVal = 0
     print("IN TRANSACTIONS STATE")
+    self.history = transaction_data or {}
     bottomnav:load(self)
 end
 

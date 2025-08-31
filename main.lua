@@ -40,6 +40,9 @@ fontHB = love.graphics.newFont(fontName.."-black.ttf", 64 * scale)
 
 -- Importing data
 transaction_data = require("src.datasets.transaction_data")
+
+trans_Data = require 'src.states.substates.transactions'
+balance_Data = require 'src.states.balance'
 -- Importing components
 bottomnav = require("src.components.bottomnav")
 sublinks = require("src.components.sublinks")
