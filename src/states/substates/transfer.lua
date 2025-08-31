@@ -29,6 +29,12 @@ function transfer:update(dt)
         self.fadeInVal = self.fadeInVal + 1 * dt
     end
     self.fadeInVal = math.min(self.fadeInVal, 1)
+
+    if love.keyboard.isDown("backspace") then
+            self.inputAmount.value = string.len(tostring(self.inputAmount.value)) > 1 and  string.sub(self.inputAmount.value, 0, -1) or 0
+
+    end
+
     local mx, my = love.mouse.getPosition()
     if mx > self.inputAmount.x and mx < self.inputAmount.x + self.inputAmount.w and my > self.inputAmount.y and my < self.inputAmount.y + self.inputAmount.h then
         if love.mouse.isDown(1) then
@@ -40,7 +46,7 @@ end
 
 function transfer:textinput(t)
     if self.inputAmount.selected then
-            self.inputAmount.value = self.inputAmount.value + t
+            self.inputAmount.value = self.inputAmount.value .. t
 
     end
 end
@@ -50,7 +56,7 @@ function transfer:draw()
         .fadeInVal }
 
     love.graphics.setColor(transColor)    love.graphics.setFont(fontB)
-    local hText = "Bank Transfer"
+    local hText = "BANK TRANSFER"
     love.graphics.print(hText, wW/2 - fontB:getWidth(hText)/2, 50 * scale)
     buttontab:draw()
     love.graphics.rectangle("line", self.inputAmount.x, self.inputAmount.y, self.inputAmount.w, self.inputAmount.h, 15 * scale)
