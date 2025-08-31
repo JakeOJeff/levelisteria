@@ -69,6 +69,7 @@ function transfer:draw()
     local hText = "BANK TRANSFER"
     love.graphics.print(hText, wW / 2 - fontB:getWidth(hText) / 2, 50 * scale)
     love.graphics.setFont(fontB)
+    love.graphics.print("Enter/Choose Amount", self.inputAmount.x, buttontab.y - fontB:getHeight() - 20 * scale)
     buttontab:draw()
     
     love.graphics.rectangle("line", self.inputAmount.x, self.inputAmount.y, self.inputAmount.w, self.inputAmount.h,
