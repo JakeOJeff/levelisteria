@@ -18,11 +18,29 @@ function transfer:load()
         h = buttontab.h * 2,
         selected = false
     }
-
+    self.inputName = {
+        value = "0",
+        x = self.inputAmount.x,
+        y = self.inputAmount.y + self.inputAmount.h + 50 * scale,
+        w = buttontab.w * 3 + 20 * scale * 2,
+        h = buttontab.h * 2,
+        selected = false
+    }
     self.deleteHeld = false
     self.deleteTimer = 0
-    self.deleteDelay = 1     -- seconds before repeating starts
+    self.deleteDelay = 1 -- seconds before repeating starts
     self.deleteInterval = 0.1 -- seconds between repeats
+
+    self.submitBtn = {
+        func = function()
+            table.insert(transaction_data, {
+                        id = #transaction_data,
+        amount = self.inputAmount.value,
+        partner = self.inputName.value,
+        date =  os.date("%Y-%m-%d")
+            })
+        end
+    }
 end
 
 function transfer:update(dt)
@@ -33,7 +51,7 @@ function transfer:update(dt)
     end
     self.fadeInVal = math.min(self.fadeInVal, 1)
 
-        if self.deleteHeld then
+    if self.deleteHeld then
         self.deleteTimer = self.deleteTimer + dt
 
         if self.deleteTimer > self.deleteDelay then
@@ -43,20 +61,27 @@ function transfer:update(dt)
         end
     end
     local mx, my = love.mouse.getPosition()
-    if mx > self.inputAmount.x and mx < self.inputAmount.x + self.inputAmount.w and my > self.inputAmount.y and my <
-        self.inputAmount.y + self.inputAmount.h then
-        if love.mouse.isDown(1) then
-
+    if love.mouse.isDown(1) then
+        if mx > self.inputAmount.x and mx < self.inputAmount.x + self.inputAmount.w and my > self.inputAmount.y and my <
+            self.inputAmount.y + self.inputAmount.h then
             self.inputAmount.selected = true
+            self.inputName.selected = false
+        elseif mx > self.inputName.x and mx < self.inputName.x + self.inputName.w and my > self.inputName.y and my <
+            self.inputName.y + self.inputName.h then
+            self.inputName.selected = true
+            self.inputAmount.selected = false
         end
     end
 end
 
 function transfer:textinput(t)
-    
+
     if self.inputAmount.selected and checkNum(t) then
         self.inputAmount.value = self.inputAmount.value .. t
 
+    end
+    if self.inputName.selected then
+        self.inputName.value = self.inputName.value .. t
     end
 end
 
@@ -71,27 +96,53 @@ function transfer:draw()
     love.graphics.setFont(fontB)
     love.graphics.print("Enter/Choose Amount", self.inputAmount.x, buttontab.y - fontB:getHeight() - 20 * scale)
     buttontab:draw()
-    
+
     love.graphics.rectangle("line", self.inputAmount.x, self.inputAmount.y, self.inputAmount.w, self.inputAmount.h,
         15 * scale)
     local sendAmt = utils.normalizeCurrency(tonumber(self.inputAmount.value))
-        love.graphics.setFont(fontHB)
+    love.graphics.setFont(fontHB)
 
-    love.graphics.print(sendAmt, self.inputAmount.x + (self.inputAmount.w/2 - fontHB:getWidth(sendAmt)/2),
-        self.inputAmount.y + (self.inputAmount.h/2 - fontHB:getHeight()/2))
-
+    love.graphics.print(sendAmt, self.inputAmount.x + (self.inputAmount.w / 2 - fontHB:getWidth(sendAmt) / 2),
+        self.inputAmount.y + (self.inputAmount.h / 2 - fontHB:getHeight() / 2))
 
     love.graphics.setColor(transColor)
 
     love.graphics.setFont(fontB)
     love.graphics.print("Enter Recipient", self.inputAmount.x, self.inputAmount.y + self.inputAmount.h + 30 * scale)
+    love.graphics.rectangle("line", self.inputName.x, self.inputName.y, self.inputName.w, self.inputName.h, 15 * scale)
+    local sendAmt = (self.inputName.value)
+    love.graphics.setFont(fontHB)
 
-    
+    love.graphics.print(sendAmt, self.inputName.x + (self.inputName.w / 2 - fontHB:getWidth(sendAmt) / 2),
+        self.inputName.y + (self.inputAmount.h / 2 - fontHB:getHeight() / 2))
+
+
+        -- SEND BUTTON
+    if btn.hovering then
+        hoverStyle = "fill"
+        hoverInvertColor = {1, 1, 1}
+        if love.mouse.isDown(1) then
+            btn.func()
+        end
+    else
+        hoverStyle = "line"
+        hoverInvertColor = utils.hexToRgb(colors[3])
+    end
+    love.graphics.rectangle(hoverStyle, btn.x, btn.y, btn.w, btn.h, 15 * scale, 15 * scale)
+
+    -- draw amount text centered inside button
+    local text = "Send Money"
+    local font = love.graphics.getFont()
+    local tw = font:getWidth(text)
+    local th = font:getHeight()
+    love.graphics.setColor(hoverInvertColor)
+    love.graphics.print(text, btn.x + (btn.w - tw) / 2, btn.y + (btn.h - th) / 2)
+    love.graphics.setColor(utils.hexToRgb(colors[3]))
     bottomnav:draw()
 end
 
 function transfer:keypressed(key)
-        if key == "backspace" then
+    if key == "backspace" then
         self:deleteChar() -- immediate delete
         self.deleteHeld = true
         self.deleteTimer = 0
@@ -106,7 +157,7 @@ end
 function transfer:deleteChar()
     local str = tostring(self.inputAmount.value)
     if #str > 1 then
-        if #str == 2 and string.sub(str, 1,1) == "-" then
+        if #str == 2 and string.sub(str, 1, 1) == "-" then
             self.inputAmount.value = "0"
         else
             self.inputAmount.value = string.sub(str, 1, -2)
@@ -114,7 +165,7 @@ function transfer:deleteChar()
     elseif #str >= 0 then
         self.inputAmount.value = "0"
     end
-    
+
 end
 
 function checkNum(val)
