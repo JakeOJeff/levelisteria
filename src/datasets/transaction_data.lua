@@ -16,10 +16,10 @@ end
 local partners = { "Alice", "Bob", "Charlie", "Jimmy", "Anrin", "JAKE BANK", "Eve", "MallMart" }
 
 
-for i = 1, 30 do
+for i = 1, 15 do
     local t = {
         id = i,
-        amount = love.math.random(-1000, 1000), -- can be negative (debit) or positive (credit)
+        amount = love.math.random(-1000, 10000), -- can be negative (debit) or positive (credit)
         partner = partners[math.random(#partners)],
         date = random_date()
     }

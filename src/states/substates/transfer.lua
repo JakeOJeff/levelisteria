@@ -29,19 +29,21 @@ function transfer:load()
     }
     self.deleteHeld = false
     self.deleteTimer = 0
-    self.deleteDelay = 1 -- seconds before repeating starts
+    self.deleteDelay = 1      -- seconds before repeating starts
     self.deleteInterval = 0.1 -- seconds between repeats
 
     self.submitBtn = {
         func = function()
-            table.insert(transaction_data, {
-                id = #transaction_data + 1,
-                amount = self.inputAmount.value,
-                partner = self.inputName.value,
-                date = os.date("%Y-%m-%d")
-            })
-            balance_Data.amount = balance_Data.amount - tonumber(self.inputAmount.value)
-
+            if tonumber(self.inputAmount.value) < balance_Data.amount then
+                table.insert(transaction_data, {
+                    id = #transaction_data + 1,
+                    amount = self.inputAmount.value,
+                    partner = self.inputName.value,
+                    date = os.date("%Y-%m-%d")
+                })
+                balance_Data.amount = balance_Data.amount - tonumber(self.inputAmount.value)
+                print(balance_Data.amount)
+            end
         end,
         hovering = false,
         x = self.inputAmount.x + 50 * scale,
@@ -90,10 +92,8 @@ function transfer:update(dt)
 end
 
 function transfer:textinput(t)
-
     if self.inputAmount.selected and checkNum(t) then
-        self.inputAmount.value = self.inputAmount.value .. t 
-
+        self.inputAmount.value = self.inputAmount.value .. t
     end
     if self.inputName.selected then
         self.inputName.value = self.inputName.value .. t
@@ -101,8 +101,8 @@ function transfer:textinput(t)
 end
 
 function transfer:draw()
-    local transColor = {utils.hexToRgb(colors[3])[1], utils.hexToRgb(colors[3])[2], utils.hexToRgb(colors[3])[3],
-                        self.fadeInVal}
+    local transColor = { utils.hexToRgb(colors[3])[1], utils.hexToRgb(colors[3])[2], utils.hexToRgb(colors[3])[3],
+        self.fadeInVal }
 
     love.graphics.setColor(transColor)
     love.graphics.setFont(fontB)
@@ -136,7 +136,7 @@ function transfer:draw()
     -- SEND BUTTON
     if btn.hovering then
         hoverStyle = "fill"
-        hoverInvertColor = {1, 1, 1}
+        hoverInvertColor = { 1, 1, 1 }
         if love.mouse.isDown(1) then
             btn.func()
         end
@@ -156,24 +156,28 @@ function transfer:draw()
     love.graphics.setColor(utils.hexToRgb(colors[3]))
     bottomnav:draw()
 end
+
 function transfer:currentlySelected()
-    return self.inputAmount.selected and self.inputAmount or self.inputName 
+    return self.inputAmount.selected and self.inputAmount or self.inputName
 end
+
 function transfer:keypressed(key)
     if key == "backspace" then
         self:deleteChar(self:currentlySelected()) -- immediate delete
         self.deleteHeld = true
-        self.deleteTimer = 0 
+        self.deleteTimer = 0
     end
 end
+
 function transfer:keyreleased(key)
     if key == "backspace" then
         self.deleteHeld = false
     end
 end
+
 -- helper: actually delete last char
 function transfer:deleteChar(sel)
-    local str = tostring(sel.value) 
+    local str = tostring(sel.value)
 
     -- For integers
     if sel == self.inputAmount then
@@ -188,26 +192,27 @@ function transfer:deleteChar(sel)
         end
     else
         if #str > 0 then
-                self.inputName.value = string.sub(str, 1, -2)
+            self.inputName.value = string.sub(str, 1, -2)
         end
     end
-
 end
 
 function transfer:mousepressed(x, y, button)
     if button == 1 then
         if self.submitBtn.hovering then
             self.submitBtn.func()
-            
+
             trans_Data:load()
             transfer.setScene("balance")
         end
     end
 end
+
 function checkNum(val)
     if tonumber(val) ~= nil then
         return true
     end
     return false
 end
+
 return transfer

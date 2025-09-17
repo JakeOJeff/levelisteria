@@ -67,7 +67,7 @@ function transactions:draw()
             10 * scale)
         love.graphics.setFont(font)
         local ind = self.history[v.id]
-        local transactionType = ind.amount > 0 and "Received" or "Sent"
+        local transactionType = (ind.amount > 0 and ind.amount ~= nil) and "Received" or "Sent"
         local myTransactionColor = transactionType == "Received" and { 134 / 255, 255 / 255, 125 / 255, self.fadeInVal } or
             { 255 / 255, 134 / 255, 125 / 255, self.fadeInVal }
         love.graphics.setColor(myTransactionColor)
